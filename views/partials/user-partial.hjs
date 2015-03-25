@@ -1,0 +1,45 @@
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-striped">
+			<tr>
+				<th>Email</th>
+				<th>Lang</th>
+				<th>Sex</th>
+				<th>Vorname</th>
+				<th>Nachname</th>
+				<th>Type</th>
+				<th>Id</th>
+				<th><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></th>
+			</tr>
+			{{#userContent}}
+				<tr>
+					<td>{{email}}</td>
+					<td>{{language}}</td>
+					<td>{{gender}}</td>
+					<td>{{vname}}</td>
+					<td>{{nname}}</td>
+					<td>{{type}}</td>
+					<td><pre>{{id}}</pre></td>
+					<td><button class="btn btn-danger" data-toggle="modal" data-targetid="{{{id}}}" data-targetemail="{{{email}}}" data-target="#userDeletionWarningModal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+				</tr>
+			{{/userContent}}
+		</table>
+	</div>
+</div>
+
+<div class="modal fade" id="userDeletionWarningModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Confirm Deletion</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-danger">Delete User</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-md-10">
+        <h1>{{ profile.giveName }} <span class="label label-default">Type {{ profile.type }}</span></h1><br>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <img src="http://lorempixel.com/160/160/" class="img-thumbnail">
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Info
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>Email</dt>
+                    <dd>{{ profile.email }}</dd>
+                    <dt>Sex</dt>
+                    <dd>{{ profile.gender }}</dd>
+                    <dt>Language</dt>
+                    <dd>{{ profile.language }}</dd>
+                    <dt>Registered</dt>
+                    <dd>{{ profile.createdAt }}</dd>
+                    <dt>Id</dt>
+                    <dd><pre>{{ profile.id }}</pre></dd>
+                    <dt>Hash</dt>
+                    <dd><pre>{{ profile.passwordHash }}</pre></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
