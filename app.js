@@ -24,6 +24,7 @@ fs.readdirSync(__dirname + '/models').forEach(function(filename) {
 });
 
 var routes = require('./routes/index');
+var dashboardRoutes = require('./routes/dashboard');
 
 var app = express();
 
@@ -97,6 +98,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 app.use('/', routes);
+app.use('/dashboard', dashboardRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
