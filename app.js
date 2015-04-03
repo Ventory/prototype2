@@ -97,6 +97,15 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+var userc = require('controller/users');
+var marketc = require('controller/market');
+var adminc = require('controller/administration');
+app.use(function(req, res, next){
+    req.users = userc;
+    req.market = marketc;
+    req.administration = adminc;
+});
+
 app.use('/', routes);
 app.use('/dashboard', dashboardRoutes);
 
