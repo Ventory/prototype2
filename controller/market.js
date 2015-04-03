@@ -1,77 +1,34 @@
 var mongoose = require('mongoose');
+var async = require('async');
 var Product = mongoose.model('products');
 var User = mongoose.model('users');
 
 module.exports = {
 	getProducts: function(criteria, callback) {
-		callback(null, [
-			{
-				name: 'Sony UG4 Relaisverstärker',
-				description: 'Guter Zustand'
-			},
-			{
-				name: 'Yamaha Monolith M207',
-				description: 'Lokal verfügbar'
-			},
-			{
-				name: 'Marantz Dune 4',
-				description: 'Königsspiegel'
-			},
-			{
-				name: 'Sony UG4 Relaisverstärker',
-				description: 'Guter Zustand'
-			},
-			{
-				name: 'Yamaha Monolith M207',
-				description: 'Lokal verfügbar'
-			},
-			{
-				name: 'Marantz Dune 4',
-				description: 'Königsspiegel'
-			},
-			{
-				name: 'Sony UG4 Relaisverstärker',
-				description: 'Guter Zustand'
-			},
-			{
-				name: 'Yamaha Monolith M207',
-				description: 'Lokal verfügbar'
-			},
-			{
-				name: 'Marantz Dune 4',
-				description: 'Königsspiegel'
-			}
-		]);
+		Product.find(criteria, callback);
+	},
+	getProduct: function(criteria, callback) {
+		Product.findOne(criteria, callback);
 	},
 	search: function(term, callback) {
 		var query = term.q;
-		if (term.d) {
-			var dim = term.d;
+		if (term.d == "v") {
+			User.textSearch(query, {filter: {type: 1}}, callback);
+		}
+		else if (term.d == "p") {
+			Product.textSearch(query, callback);
 		}
 		else
 		{
-			var dim = "vp" // Händler: v, Produkte: p
-		}
-		var cbobj = {l: dim.length()};
-		if (dim.indexOf("p") > -1) {
-			Product.textSearch(query, function (err, res) {
-				if (!err) {
-					cbobj.products = res.results;
-				}
-				if (--cbobj.l == 0) {
-					callback(null, cbobj);
-				}
-			});
-		}
-		if (dim.indexOf("v") > -1) {
-			User.textSearch(query, {filter: { type: 1 }}, function (err, res) {
-				if (!err) {
-					cbobj.vendors = res.results;
-				}
-				if (--cbobj.l == 0) {
-					callback(null, cbobj);
-				}
-			});
+			async.parallel([
+				function(cb) {
+					Product.textSearch(query, cb);
+				},
+				function(cb) {
+					User.textSearch(query, {filter: {type: 1}}, cb);
+				}],
+				callback
+			);
 		}
 	}
 }
